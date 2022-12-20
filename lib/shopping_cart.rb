@@ -32,9 +32,34 @@ class ShoppingCart
     end
 
     def products_by_category(category)
-            @products.find_all do |product|
-                product.category == category
-            end
+        @products.find_all do |product|
+            product.category == category
+        end
+    end
+
+    def percentage_occupied
+        x = total_number_of_products.to_f / @capacity
+        percentage = x * 100
+        percentage.round(2)
+    end
+
+    def sorted_products_by_quantity
+        @products.sort_by do |product|
+            product.quantity
+        end.reverse
+    end
+
+    def product_breakdown
+        meat_array = products_by_category(:meat)
+        paper_array = products_by_category(:paper)
+        produce_array = products_by_category(:produce)
+
+        {
+            meat: meat_array,
+            paper: paper_array,
+            produce: produce_array
+        }
+
     end
 
 end
